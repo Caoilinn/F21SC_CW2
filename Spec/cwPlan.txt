@@ -1,0 +1,14 @@
+4: 	Reader class for part 4
+
+5:	List of other documents that have been read by the reader that you're 
+	currently viewing - Explaination of this is in another screencast
+		
+		- This task also involves finding other readers that have read
+		  that same document
+		
+6: 	This takes the information from task 5 and outputs it in a graph
+	format
+	
+
+First you determine readers - use docID
+Collect the number of doc by other readers and then sort by how many have read those other docs
