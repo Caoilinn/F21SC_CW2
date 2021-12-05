@@ -1,5 +1,15 @@
 from tkinter import *
 import ActionManager as am
+from enum import Enum
+
+
+class Task(enum):
+    country = 1
+    continent = 2
+    browser_verbose = 3
+    browser_name = 4
+    reader = 5
+    also_likes = 6
 
 
 class GUI:
@@ -40,7 +50,7 @@ class GUI:
     def country_views(self):
         print("Country Views")
 
-        task_id = 1
+        task_id = Task.country
 
         am.ActionManager("File 1234", "User ID: 12345",
                          "Document ID: 12345", task_id)
@@ -48,7 +58,7 @@ class GUI:
     def continent_views(self):
         print("Continent Views")
 
-        task_id = 2
+        task_id = Task.continent
 
         am.ActionManager("File 1234", "User ID: 12345",
                          "Document ID: 12345", task_id)
@@ -56,7 +66,7 @@ class GUI:
     def browser_views_verbose(self):
         print("Browser Views (verbose)")
 
-        task_id = 3
+        task_id = Task.browser_verbose
 
         am.ActionManager("File 1234", "User ID: 12345",
                          "Document ID: 12345", task_id)
@@ -64,7 +74,7 @@ class GUI:
     def browser_views_name(self):
         print("Browser Views (name)")
 
-        task_id = 4
+        task_id = Task.browser_name
 
         am.ActionManager("File 1234", "User ID: 12345",
                          "Document ID: 12345", task_id)
@@ -72,7 +82,7 @@ class GUI:
     def reader_profiles(self):
         print("Reader Profiles")
 
-        task_id = 5
+        task_id = Task.reader
 
         am.ActionManager("File 1234", "User ID: 12345",
                          "Document ID: 12345", task_id)
@@ -80,7 +90,7 @@ class GUI:
     def also_likes(self):
         print("Also Likes")
 
-        task_id = 6
+        task_id = Task.also_likes
 
         am.ActionManager("File 1234", "User ID: 12345",
                          "Document ID: 12345", task_id)
