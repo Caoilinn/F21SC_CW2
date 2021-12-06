@@ -1,5 +1,6 @@
-from tkinter.constants import N
+import json
 from Task import Task
+from JSONReader import JSONReader
 
 
 class ActionManager():
@@ -9,11 +10,9 @@ class ActionManager():
         self.document_id = document_id
         self.task_id = task_id
 
-        # Check if file is empyt - no functions can be performed without a file - checks for doc and user will be where they are needed
-        if self.file == "":
-            print("Failure")
-        else:
-            self.perfromAction()
+        self.json_reader = JSONReader(self.file)
+        # Perform whatever task is passed through from either the GUI or the command line
+        self.perfromAction()
 
     # Use function decoration here
 
@@ -34,6 +33,9 @@ class ActionManager():
 
     def country_views(self):
         print("Country Views")
+
+        self.json_reader.process_file()
+        self.json_reader.print_data()
 
     def continent_views(self):
         print("Continent Views")

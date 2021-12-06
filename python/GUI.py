@@ -1,5 +1,4 @@
 from tkinter import Tk, Frame, Label, StringVar, Entry, Button, messagebox
-import tkinter
 import ActionManager as am
 from Task import Task
 
