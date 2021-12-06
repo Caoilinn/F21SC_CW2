@@ -1,6 +1,5 @@
-from enum import Enum
-from GUI import Task
-# This class controls what functions get called from the
+from tkinter.constants import N
+from Task import Task
 
 
 class ActionManager():
@@ -10,13 +9,16 @@ class ActionManager():
         self.document_id = document_id
         self.task_id = task_id
 
-        self.perfromAction()
+        # Check if file is empyt - no functions can be performed without a file - checks for doc and user will be where they are needed
+        if self.file == "":
+            print("Failure")
+        else:
+            self.perfromAction()
 
     # Use function decoration here
 
     def perfromAction(self):
-        print(
-            f"Action Manager:\n\tFile:\t{self.file}\n\tUser:\t{self.user_id}\n\tDoc:\t{self.document_id}\n\tTask:\t{self.task_id}")
+        print(self.file)
         if self.task_id == Task.country:
             self.country_views()
         elif self.task_id == Task.continent:
@@ -31,19 +33,19 @@ class ActionManager():
             self.also_likes()
 
     def country_views(self):
-        print()
+        print("Country Views")
 
     def continent_views(self):
-        print()
+        print("Continent Views")
 
     def browser_views_verbose(self):
-        print()
+        print("Browser Views Verbose")
 
     def browser_views_name(self):
-        print()
+        print("Browser Views Name")
 
     def reader_profiles(self):
-        print()
+        print("Reader Profiles")
 
     def also_likes(self):
-        print()
+        print("Also Likes")
