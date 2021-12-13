@@ -1,9 +1,11 @@
 from tkinter import Tk, Frame, Label, StringVar, Entry, Button, messagebox
-import ActionManager as am
+import ActionManager as aM
 from Task import Task
 
 
 class GUI:
+    """This class runs and manages the GUI"""
+
     def __init__(self):
 
         self.root = Tk()
@@ -104,7 +106,7 @@ class GUI:
             messagebox.showwarning(
                 title="No Document ID", message="Cannot perform this function without a document id")
         else:
-            am.ActionManager(file_id, user_id,
+            aM.ActionManager(file_id, user_id,
                              doc_id, task_id)
             self.clear_entries()
 
@@ -122,7 +124,7 @@ class GUI:
             messagebox.showwarning(
                 title="No Document ID", message="Cannot perform this function without a document id")
         else:
-            am.ActionManager(file_id, user_id,
+            aM.ActionManager(file_id, user_id,
                              doc_id, task_id)
             self.clear_entries()
 
@@ -140,7 +142,7 @@ class GUI:
             messagebox.showwarning(
                 title="No Document ID", message="Cannot perform this function without a document id")
         else:
-            am.ActionManager(file_id, user_id,
+            aM.ActionManager(file_id, user_id,
                              doc_id, task_id)
             self.clear_entries()
 
@@ -159,7 +161,7 @@ class GUI:
             messagebox.showwarning(
                 title="No Document ID", message="Cannot perform this function without a document id")
         else:
-            am.ActionManager(file_id, user_id,
+            aM.ActionManager(file_id, user_id,
                              doc_id, task_id)
             self.clear_entries()
 
@@ -174,7 +176,7 @@ class GUI:
             messagebox.showwarning(
                 title="No File", message="Cannot perform this function without a file")
         else:
-            am.ActionManager(file_id, user_id,
+            aM.ActionManager(file_id, user_id,
                              doc_id, task_id)
             self.clear_entries()
 
@@ -185,11 +187,12 @@ class GUI:
         user_id = self.user_id.get()
         doc_id = self.document_id.get()
 
-        am.ActionManager(file_id, user_id,
+        aM.ActionManager(file_id, user_id,
                          doc_id, task_id)
         self.clear_entries()
 
     def clear_entries(self):
+        """Clears every field in the GUI so the user can perform another action"""
         # https://stackoverflow.com/questions/34667710/pattern-matching-tkinter-child-widgets-winfo-children-to-determine-type
         for items in self.topFrame.winfo_children():
             if isinstance(items, Entry):

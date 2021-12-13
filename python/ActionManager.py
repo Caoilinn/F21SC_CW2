@@ -1,22 +1,23 @@
-import json
 from Task import Task
 from JSONReader import JSONReader
+from DataAnalysis import DataAnalysis
 
 
-class ActionManager():
+class ActionManager:
     def __init__(self, file, user_id, document_id, task_id):
         self.file = file
         self.user_id = user_id
         self.document_id = document_id
         self.task_id = task_id
+        self.data_analyser = DataAnalysis()
 
-        self.json_reader = JSONReader(self.file)
+        self.data = JSONReader().process_file(self.file)
         # Perform whatever task is passed through from either the GUI or the command line
-        self.perfromAction()
+        self.perform_action()
 
     # Use function decoration here
 
-    def perfromAction(self):
+    def perform_action(self):
         print(self.file)
         if self.task_id == Task.country:
             self.country_views()
@@ -32,13 +33,20 @@ class ActionManager():
             self.also_likes()
 
     def country_views(self):
-        print("Country Views")
+        """This method calls the analysis functions to create the country view dictionary and generate and show the histogram"""
+        self.data_analyser.countries(self.document_id, self.data)
+        self.data_analyser.show_histogram(self.data_analyser.num_countries_dict, "Num Viewed", "Views by Country")
 
-        self.json_reader.process_file()
-        self.json_reader.print_data()
+        # TODO: Remove later this is debug only
+        print("Countries: ", self.data_analyser.num_countries_dict)
 
     def continent_views(self):
-        print("Continent Views")
+        """This method calls the analysis functions to create the continent view dictionary and generate and show the histogram"""
+        self.data_analyser.continents(self.document_id, self.data)
+        self.data_analyser.show_histogram(self.data_analyser.num_continents_dict, "Num Viewed", "Views by Continent")
+
+        # TODO: Remove later this is debug only
+        print("Continents: ", self.data_analyser.num_continents_dict)
 
     def browser_views_verbose(self):
         print("Browser Views Verbose")
