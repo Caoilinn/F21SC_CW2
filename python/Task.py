@@ -8,3 +8,5 @@ class Task(Enum):
     browser_name = 4
     reader = 5
     also_likes = 6
+    also_likes_graph = 7
+

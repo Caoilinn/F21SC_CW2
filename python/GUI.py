@@ -7,6 +7,7 @@ class GUI:
     """This class runs and manages the GUI"""
 
     def __init__(self):
+        """Initialises the GUI - setting up the UI layout"""
 
         self.root = Tk()
         self.root.title('CW2 - Caoilinn Hughes')
@@ -95,6 +96,7 @@ class GUI:
 
     def country_views(self):
         task_id = Task.country
+
         file_id = self.file_id.get()
         user_id = self.user_id.get()
         doc_id = self.document_id.get()
