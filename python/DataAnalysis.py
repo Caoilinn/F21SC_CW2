@@ -1,3 +1,4 @@
+import httpagentparser
 import matplotlib.pyplot as plt
 
 
@@ -7,6 +8,7 @@ class DataAnalysis:
     num_continents_dict = {}
     num_browsers_verbose = {}
     num_browsers_name = {}
+    reader_profile = {}
 
     # Taken from sample http://www.macs.hw.ac.uk/~hwloidl/Courses/F21SC/Samples/simple_histo.py
     cntry_to_cont = {
@@ -307,14 +309,27 @@ class DataAnalysis:
 
     def browsers_name(self, data):
         if bool(self.num_browsers_verbose):
-            print()
+            for key in self.num_browsers_verbose:
+                browser_name = httpagentparser.simple_detect(key)[1]
+                if browser_name in self.num_browsers_name:
+                    self.num_browsers_name[browser_name] += 1
+                else:
+                    self.num_browsers_name[browser_name] = 1
+
         else:
             # If the browser's dictionary is empty then populate it and try again
             self.browsers_verbose(data)
             self.browsers_name(data)
 
-    def reader_profiles(self):
-        print()
+    def reader_profiles(self, data):
+        for i in data:
+            # Check if the json object is a pagereadtime event
+            if i["event_type"] == "pagereadtime":
+                if i["visitor_uuid"] in self.reader_profile:
+                    # Adding to the overall readtime - this is because readers are ranked by the overall amount of time they have spent reading document
+                    self.reader_profile[i["visitor_uuid"]] += i["event_readtime"]
+                else:
+                    self.reader_profile[i["visitor_uuid"]] = i["event_readtime"]
 
     def also_likes(self):
         print()

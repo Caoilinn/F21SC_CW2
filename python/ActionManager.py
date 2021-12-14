@@ -1,6 +1,7 @@
 from Task import Task
 from JSONReader import JSONReader
 from DataAnalysis import DataAnalysis
+import httpagentparser
 
 
 class ActionManager:
@@ -51,15 +52,22 @@ class ActionManager:
     def browser_views_verbose(self):
         """This method calls the analysis functions to create the browser verbose dictionary and generate and show the histogram"""
         self.data_analyser.browsers_verbose(self.data)
-        self.data_analyser.show_histogram(self.data_analyser.num_browsers_verbose, "Num Used", "Views by Browser")
+        self.data_analyser.show_histogram(self.data_analyser.num_browsers_verbose, "Num Used",
+                                          "Views by Browser (verbose)")
+
+        # TODO: Remove later this is debug only
         print(self.data_analyser.num_browsers_verbose)
 
     def browser_views_name(self):
         """This method calls the analysis functions to create the browser name dictionary and generate and show the histogram"""
-        self.data_analyser.browsers_name()
+        self.data_analyser.browsers_name(self.data)
+        self.data_analyser.show_histogram(self.data_analyser.num_browsers_name, "Num Used", "Views by Browser (name)")
+        print(self.data_analyser.num_browsers_name)
 
     def reader_profiles(self):
-        self.data_analyser.reader_profiles()
+        self.data_analyser.reader_profiles(self.data)
+
+        print(self.data_analyser.reader_profile)
 
     def also_likes(self):
         print("Also Likes")
