@@ -9,6 +9,9 @@ class DataAnalysis:
     num_browsers_verbose = {}
     num_browsers_name = {}
     reader_profile = {}
+    sorted_readers = {}
+    document_readers = {}
+    reader_documents = {}
 
     # Taken from sample http://www.macs.hw.ac.uk/~hwloidl/Courses/F21SC/Samples/simple_histo.py
     cntry_to_cont = {
@@ -285,7 +288,7 @@ class DataAnalysis:
             for key in self.num_countries_dict:
                 # Check if the country code matches up
                 if key in self.cntry_to_cont:
-                    # Check if the continent alreay exists in the num_continent dictionary
+                    # Check if the continent already exists in the num_continent dictionary
                     cont_key = self.cntry_to_cont.get(key)
                     print("The continent is ", cont_key)
                     if self.cntry_to_cont[key] in self.num_continents_dict:
@@ -308,6 +311,7 @@ class DataAnalysis:
                     self.num_browsers_verbose[i['visitor_useragent']] = 1
 
     def browsers_name(self, data):
+        """Finds out how many of each browser is used to view files - this version shortens the browser name by using the httpagentparser library"""
         if bool(self.num_browsers_verbose):
             for key in self.num_browsers_verbose:
                 browser_name = httpagentparser.simple_detect(key)[1]
@@ -315,13 +319,14 @@ class DataAnalysis:
                     self.num_browsers_name[browser_name] += 1
                 else:
                     self.num_browsers_name[browser_name] = 1
-
         else:
             # If the browser's dictionary is empty then populate it and try again
             self.browsers_verbose(data)
             self.browsers_name(data)
 
     def reader_profiles(self, data):
+        """Finds all the readers in the JSON file and adds up how much time they spent reading documents as a whole,
+        adds this to a dictionary and then finds the top 10 readers - i.e. those who have spent the most time reading"""
         for i in data:
             # Check if the json object is a pagereadtime event
             if i["event_type"] == "pagereadtime":
@@ -330,11 +335,36 @@ class DataAnalysis:
                     self.reader_profile[i["visitor_uuid"]] += i["event_readtime"]
                 else:
                     self.reader_profile[i["visitor_uuid"]] = i["event_readtime"]
+        top_constraint = 10
+        self.sorted_readers = dict(
+            sorted(self.reader_profile.items(), key=lambda x: x[1], reverse=True)[:top_constraint])
 
-    def also_likes(self):
-        print()
+    def also_likes(self, doc_id, data):
+        self.visitor_documents(doc_id, data)
 
-    def show_histogram(self, data, label, title):
+    def document_visitors(self, doc_id, data):
+        for i in data:
+            if i["event_type"] == "read":
+                if i["subject_doc_id"] == doc_id:
+                    if i["visitor_uuid"] in self.document_readers:
+                        pass
+                    else:
+                        self.document_readers[i["visitor_uuid"]] = i["subject_doc_id"]
+
+    def visitor_documents(self, visitor_id, data):
+        for i in data:
+            if i["event_type"] == "read":
+                if i["visitor_uuid"] == visitor_id:
+                    print("A reader exists")
+                    if i["subject_doc_id"] in self.reader_documents:
+                        pass
+                        print("Not adding to the dictionary")
+                    else:
+                        print("adding to the dictionary")
+                        self.reader_documents[i["subject_doc_id"]] = i["visitor_uuid"]
+
+    @staticmethod
+    def show_histogram(data, label, title):
         """Displays a histogram, the data displayed in the histogram is dependent on the data passed into the method"""
         length = len(data)
 
@@ -343,3 +373,17 @@ class DataAnalysis:
         plt.xlabel(label)
         plt.title(title)
         plt.show()
+
+    def clear_dictionaries(self):
+        """The purpose of this function is to clear the dictionaries after each operation,
+        if the dictionaries are not cleared then there is the possibility of repeated data if
+        the same function is used twice, or data that is not relevant to the search query showing up
+        in the search results"""
+        self.num_countries_dict.clear()
+        self.num_continents_dict.clear()
+        self.num_browsers_verbose.clear()
+        self.num_browsers_name.clear()
+        self.reader_profile.clear()
+        self.sorted_readers.clear()
+        self.document_readers.clear()
+        self.visitor_documents.clear()

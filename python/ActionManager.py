@@ -1,7 +1,6 @@
 from Task import Task
 from JSONReader import JSONReader
 from DataAnalysis import DataAnalysis
-import httpagentparser
 
 
 class ActionManager:
@@ -19,7 +18,6 @@ class ActionManager:
     # Use function decoration here
 
     def perform_action(self):
-        print(self.file)
         if self.task_id == Task.country:
             self.country_views()
         elif self.task_id == Task.continent:
@@ -67,7 +65,11 @@ class ActionManager:
     def reader_profiles(self):
         self.data_analyser.reader_profiles(self.data)
 
-        print(self.data_analyser.reader_profile)
+        print(f"{self.data_analyser.reader_profile}\n")
+        print(self.data_analyser.sorted_readers)
+
+        # TODO: Use the observer pattern to create a popup in tkinter
 
     def also_likes(self):
-        print("Also Likes")
+        self.data_analyser.also_likes(self.document_id, self.data)
+        print(self.data_analyser.reader_documents)
