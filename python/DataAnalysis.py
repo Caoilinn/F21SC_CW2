@@ -5,17 +5,10 @@ class DataAnalysis:
     # Dictionaries that hold how many of each country and continent there are in the returned data
     num_countries_dict = {}
     num_continents_dict = {}
+    num_browsers_verbose = {}
+    num_browsers_name = {}
 
     # Taken from sample http://www.macs.hw.ac.uk/~hwloidl/Courses/F21SC/Samples/simple_histo.py
-    continents = {
-        'AF': 'Africa',
-        'AS': 'Asia',
-        'EU': 'Europe',
-        'NA': 'North America',
-        'SA': 'South America',
-        'OC': 'Oceania',
-        'AN': 'Antarctica'
-    }
     cntry_to_cont = {
         'AF': 'AS',
         'AX': 'EU',
@@ -298,13 +291,27 @@ class DataAnalysis:
                     else:
                         self.num_continents_dict[cont_key] = 1
         else:
-            print("There are no countries in the dictionary")
+            # If the country dictionary is not populated then populate it and try again
+            self.countries(doc_id, data)
+            self.continents(doc_id, data)
 
-    def browsers_name(self):
-        print()
+    def browsers_verbose(self, data):
+        """Finds out how many of each browser is used to view files"""
+        for i in data:
+            # Check if the json object is a reader or not
+            if i["event_type"] == "read":
+                if i['visitor_useragent'] in self.num_browsers_verbose:
+                    self.num_browsers_verbose[i['visitor_useragent']] += 1
+                else:
+                    self.num_browsers_verbose[i['visitor_useragent']] = 1
 
-    def browsers_verbose(self):
-        print()
+    def browsers_name(self, data):
+        if bool(self.num_browsers_verbose):
+            print()
+        else:
+            # If the browser's dictionary is empty then populate it and try again
+            self.browsers_verbose(data)
+            self.browsers_name(data)
 
     def reader_profiles(self):
         print()

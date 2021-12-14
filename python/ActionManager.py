@@ -49,13 +49,17 @@ class ActionManager:
         print("Continents: ", self.data_analyser.num_continents_dict)
 
     def browser_views_verbose(self):
-        print("Browser Views Verbose")
+        """This method calls the analysis functions to create the browser verbose dictionary and generate and show the histogram"""
+        self.data_analyser.browsers_verbose(self.data)
+        self.data_analyser.show_histogram(self.data_analyser.num_browsers_verbose, "Num Used", "Views by Browser")
+        print(self.data_analyser.num_browsers_verbose)
 
     def browser_views_name(self):
-        print("Browser Views Name")
+        """This method calls the analysis functions to create the browser name dictionary and generate and show the histogram"""
+        self.data_analyser.browsers_name()
 
     def reader_profiles(self):
-        print("Reader Profiles")
+        self.data_analyser.reader_profiles()
 
     def also_likes(self):
         print("Also Likes")

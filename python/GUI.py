@@ -138,9 +138,6 @@ class GUI:
         if file_id == "":
             messagebox.showwarning(
                 title="No File", message="Cannot perform this function without a file")
-        elif doc_id == "":
-            messagebox.showwarning(
-                title="No Document ID", message="Cannot perform this function without a document id")
         else:
             aM.ActionManager(file_id, user_id,
                              doc_id, task_id)
@@ -157,9 +154,6 @@ class GUI:
         if file_id == "":
             messagebox.showwarning(
                 title="No File", message="Cannot perform this function without a file")
-        elif doc_id == "":
-            messagebox.showwarning(
-                title="No Document ID", message="Cannot perform this function without a document id")
         else:
             aM.ActionManager(file_id, user_id,
                              doc_id, task_id)
