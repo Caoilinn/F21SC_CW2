@@ -24,6 +24,10 @@ class CLI:
         if self.file_id is None:
             print("Cannot complete any function without a file")
             quit()
+        
+        if self.task_id is None:
+            print("Cannot complete any tasks without a task id")
+            quit()
 
         # If the user is trying to run the document fetch tasks without a document id then the application will quit
         if self.task_id == "2a" or self.task_id == "2b" and self.document_id is None:
@@ -54,3 +58,9 @@ class CLI:
             self.task_id = Task.also_likes
         elif self.task_id == "6":
             self.task_id = Task.also_likes_graph
+        elif self.task_id == "7":
+            print("NOT IMPLEMENTED")
+            quit()
+        else:
+            print("Not a valid task ID")
+            quit()
